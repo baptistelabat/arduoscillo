@@ -1,6 +1,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8" />
+		<script type="text/javascript" src="static/flotr2.js"></script>
 		<script type="text/javascript" src = "static/app.js" charset="utf-8" >	
 		</script>
 	</head>
@@ -14,34 +15,10 @@
 			<input type="checkbox" name="pin" value="A5">A5
 		</form> 
 		<div id="graphDiv" style="width:960px; height:600px;"></div>
-		<script type="text/javascript" src="static/flotr2.js"></script>
+
 		<script type="text/javascript">
 			(function () {
-				var graph;
-				var container = document.getElementById("graphDiv");
-
-				// Draw Graph
-				function drawGraph(){
-					graph = Flotr.draw(container, data, {
-						xaxis: {
-							minorTickFreq: 4
-						}, 
-						yaxis: {
-							max: 1,
-							min: 0
-						},
-						grid: {
-							minorVerticalLines: true
-						}
-					});
-
-					// Reload
-					setTimeout(function(){
-						drawGraph();
-					}, 100);
-				}
-
-				drawGraph();
+    			drawGraph();
 			})();
 		</script>
 	</body>

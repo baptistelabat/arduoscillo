@@ -9,6 +9,7 @@ var data = new Array();
 ws = new WebSocket("ws://"+window.location.host + "/websocket");
 ws.onmessage = function(evt) {
 	var msg = evt.data;
+	console.log(msg);
 	obj = JSON.parse(msg);
 	d0.push([obj.x, obj.d0/1024]);
 	d1.push([obj.x, obj.d1/1024]);
@@ -80,19 +81,19 @@ ws.onmessage = function(evt) {
 		n=n+1;
 	}
 }
-			
-(function () {
-	var graph;
-	var container = document.getElementById("graphDiv");
+
+
 
 	// Draw Graph
-	function drawGraph(){
+function drawGraph(){
+		var graph;
+		var container = document.getElementById("graphDiv");
 		graph = Flotr.draw(container, data, {
 			xaxis: {
 				minorTickFreq: 4
 			}, 
 			yaxis: {
-				max: 25,
+				max: 1,
 				min: 0
 			},
 			grid: {
@@ -104,7 +105,6 @@ ws.onmessage = function(evt) {
 		setTimeout(function(){
 			drawGraph();
 		}, 100);
-	}
+}
 
-	drawGraph();
-	})();
+
