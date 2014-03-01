@@ -17,7 +17,7 @@ import datetime
 import time
 import json
 import math
-from pyfirmata import Arduino, util
+
 clients = []
 global t0
 global ser
