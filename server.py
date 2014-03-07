@@ -53,6 +53,7 @@ def checkSerial():
         print "Received from arduino: " + s
     except Exception, e:
         print("Error reading from serial port" + str(e))
+        openSerial()
         return
     
     if len(s):
