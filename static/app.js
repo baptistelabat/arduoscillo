@@ -6,7 +6,7 @@ d4 = [];
 d5 = [];
 MAX_OCL = 200;
 var data = new Array();
-ws = new WebSocket("ws://"+window.location.host + "/websocket");
+ws = new WebSocket("ws://" + window.location.host + "/websocket");
 ws.onmessage = function(evt) {
 	var msg = evt.data;
 	console.log(msg);

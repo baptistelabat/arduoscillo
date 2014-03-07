@@ -34,13 +34,14 @@ def openSerial():
       print "Trying...",device
       ser = serial.Serial(device, baudrate=19200, timeout=1)
       print "Connected on ", device
+      time.sleep(1.5) # Arduino is reset when opening port so wait before communicating
+      # An alternative would be to listen to a message from the arduino saying it is ready
+      ser.write('i1') # i to start serial control, 1 is the minimum expecting message frequency (in house protocol)
+
       break
     except:
       print "Failed to connect on ", device
       
-  time.sleep(1.5) # Arduino is reset when opening port so wait before communicating
-  # An alternative would be to listen to a message from the arduino saying it is ready
-  ser.write('i1') # i to start serial control, 1 is the minimum expecting message frequency (in house protocol)
 
 def checkSerial():
     global ser
