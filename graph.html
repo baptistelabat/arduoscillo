@@ -15,7 +15,30 @@
 			<input type="checkbox" name="pin" value="A5">A5
 		</form> 
 		<div id="graphDiv" style="width:960px; height:600px;"></div>
-
+		<form name = "option">
+			<fieldset>
+			<input type="checkbox" name="pause" value="pause">Stop scrolling<br>		
+				<p>
+					<label>Zoom:  </label>
+					<input id = "ZoomNumber"
+						type = "number"
+						min = "1"
+						max = "10"
+						value = "5"
+						step = "1"
+						onchange = "updateZoomNumber()" />
+					<br/>
+					min
+					<input id = "ZoomRange"
+						type = "range"
+						min = "1"
+						max = "10"
+						value = "5"
+						onchange = "updateZoomRange()" />
+					max
+				</p>
+			</fieldset>
+		</form> 
 		<script type="text/javascript">
 			(function () {
     			drawGraph();

@@ -47,20 +47,20 @@ def checkSerial():
     global ser
     global serialPending
     global t0
-    
+    t = time.time()-t0 
     try:
         s = ser.readline()
         print "Received from arduino: " + s
     except Exception, e:
         print("Error reading from serial port" + str(e))
         openSerial()
-        return
-    
+        d = str(-512)   
+        s = d+', ' + d + ', ' + d + ', ' +d + ', '+d+', '+d
     if len(s):
-      a = s.split(',')      
+      a = s.split(',') 
+      print a     
       for c in clients:
-        t = time.time()-t0
-        c.write_message( json.dumps({'x':t, 'd0':a[0], 'd1':a[1], 'd2':a[2], 'd3':a[3], 'd4':a[4], 'd5':a[5]}))
+        c.write_message( json.dumps({'x':t, 'd0':float(a[0]), 'd1':float(a[1]), 'd2':float(a[2]), 'd3':float(a[3]), 'd4':float(a[4]), 'd5':float(a[5])}))
 
         
 class MainHandler(tornado.web.RequestHandler):

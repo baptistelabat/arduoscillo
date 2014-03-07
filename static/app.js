@@ -4,7 +4,19 @@ d2 = [];
 d3 = [];
 d4 = [];
 d5 = [];
-MAX_OCL = 200;
+d0s = [];
+d1s = [];
+d2s = [];
+d3s = [];
+d4s = [];
+d5s = [];
+d0p = [];
+d1p = [];
+d2p = [];
+d3p = [];
+d4p = [];
+d5p = [];
+MAX_OCL = 6000;
 var data = new Array();
 ws = new WebSocket("ws://" + window.location.host + "/websocket");
 ws.onmessage = function(evt) {
@@ -35,47 +47,79 @@ ws.onmessage = function(evt) {
 	if(d5.length > MAX_OCL){
 		d5.shift();
 	}
+	if (!(document.option.pause.checked)){
+		d0s = d0.slice(0);
+		d1s = d1.slice(0);
+		d2s = d2.slice(0);
+		d3s = d3.slice(0);
+		d4s = d4.slice(0);
+		d5s = d5.slice(0);
+		d0p = d0;
+		d1p = d1;
+		d2p = d2;
+		d3p = d3;
+		d4p = d4;
+		d5p = d5;
+	}
+	else
+	{
+		d0p = d0s;
+		d1p = d1s;
+		d2p = d2s;
+		d3p = d3s;
+		d4p = d4s;
+		d5p = d5s;
+	}
+	var maxstep = 10;
+	var timelength = document.getElementById("ZoomRange").value;
+	var l = d0p.length-d0p.length*timelength/maxstep;
+	d0p = slice(d0p, l, null, timelength);
+	d1p = slice(d0p, l, null, timelength);
+	d2p = slice(d0p, l, null, timelength);
+	d3p = slice(d0p, l, null, timelength);
+	d4p = slice(d0p, l, null, timelength);
+	d5p = slice(d0p, l, null, timelength);
 	var n;
 	n = 0
 	data = new Array();
 	if (document.chk.pin[0].checked){
 		data[n] = {
-			data: d0,
+			data: d0p,
 			label: 'A0'
 		};
 		n=n+1;
 	}
 	if (document.chk.pin[1].checked){
 		data[n] = {
-			data: d1,
+			data: d1p,
 			label: 'A1'
 		};
 		n=n+1;
 	}
 	if (document.chk.pin[2].checked){
 		data[n] = {
-			data: d2,
+			data: d2p,
 			label: 'A2'
 		};
 		n=n+1;
 	}
 	if (document.chk.pin[3].checked){
 		data[n] = {
-			data: d3,
+			data: d3p,
 			label: 'A3'
 		};
 		n=n+1;
 	}
 	if (document.chk.pin[4].checked){
 		data[n] = {
-			data: d4,
+			data: d4p,
 			label: 'A4'
 		};
 		n=n+1;
 	}
 	if (document.chk.pin[5].checked){
 		data[n] = {
-			data: d5,
+			data: d5p,
 			label: 'A5'
 		};
 		n=n+1;
@@ -106,5 +150,39 @@ function drawGraph(){
 			drawGraph();
 		}, 100);
 }
+
+function slice(array, from, to, step) {
+	if (from===null) from=0;
+	if (to===null) to=array.length;
+	if (!step) return array.slice(from, to);
+	var result = Array.prototype.slice.call(array, from, to);
+	if (step < 0) result.reverse();
+	step = Math.abs(step);
+	if (step > 1) {
+		var final = [];
+		for (var i = result.length - 1; i >= 0; i--) {
+		(i % step === 0) && final.push(result[i]);
+		};
+		final.reverse();
+		result = final;
+	}
+	return result;
+}
+
+function updateZoomRange(){
+//get elements
+var myRange = document.getElementById("ZoomRange");
+var myNumber = document.getElementById("ZoomNumber");
+//copy the value over
+myNumber.value = myRange.value;
+} // end function
+
+function updateZoomNumber(){
+//get elements
+var myRange = document.getElementById("ZoomRange");
+var myNumber = document.getElementById("ZoomNumber");
+//copy the value over
+myRange.value = myNumber.value;
+} // end function
 
 
