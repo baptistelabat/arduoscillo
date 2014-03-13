@@ -16,6 +16,7 @@ d2p = [];
 d3p = [];
 d4p = [];
 d5p = [];
+myColors = [];
 MAX_OCL = 6000;
 var data = new Array();
 ws = new WebSocket("ws://" + window.location.host + "/websocket");
@@ -82,11 +83,13 @@ ws.onmessage = function(evt) {
 	var n;
 	n = 0
 	data = new Array();
+	myColors = [];
 	if (document.chk.pin[0].checked){
 		data[n] = {
 			data: d0p,
 			label: 'A0'
 		};
+		myColors.push('red');
 		n=n+1;
 	}
 	if (document.chk.pin[1].checked){
@@ -94,6 +97,7 @@ ws.onmessage = function(evt) {
 			data: d1p,
 			label: 'A1'
 		};
+		myColors.push('green');
 		n=n+1;
 	}
 	if (document.chk.pin[2].checked){
@@ -101,6 +105,7 @@ ws.onmessage = function(evt) {
 			data: d2p,
 			label: 'A2'
 		};
+		myColors.push('blue');
 		n=n+1;
 	}
 	if (document.chk.pin[3].checked){
@@ -108,6 +113,7 @@ ws.onmessage = function(evt) {
 			data: d3p,
 			label: 'A3'
 		};
+		myColors.push('purple');
 		n=n+1;
 	}
 	if (document.chk.pin[4].checked){
@@ -115,6 +121,7 @@ ws.onmessage = function(evt) {
 			data: d4p,
 			label: 'A4'
 		};
+		myColors.push('yellow');
 		n=n+1;
 	}
 	if (document.chk.pin[5].checked){
@@ -122,6 +129,7 @@ ws.onmessage = function(evt) {
 			data: d5p,
 			label: 'A5'
 		};
+		myColors.push('cyan');
 		n=n+1;
 	}
 }
@@ -133,6 +141,7 @@ function drawGraph(){
 		var graph;
 		var container = document.getElementById("graphDiv");
 		graph = Flotr.draw(container, data, {
+			colors: myColors,
 			xaxis: {
 				minorTickFreq: 4
 			}, 
