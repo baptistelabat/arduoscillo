@@ -74,11 +74,11 @@ ws.onmessage = function(evt) {
 	var timelength = document.getElementById("ZoomRange").value;
 	var l = d0p.length-d0p.length*timelength/maxstep;
 	d0p = slice(d0p, l, null, timelength);
-	d1p = slice(d0p, l, null, timelength);
-	d2p = slice(d0p, l, null, timelength);
-	d3p = slice(d0p, l, null, timelength);
-	d4p = slice(d0p, l, null, timelength);
-	d5p = slice(d0p, l, null, timelength);
+	d1p = slice(d1p, l, null, timelength);
+	d2p = slice(d2p, l, null, timelength);
+	d3p = slice(d3p, l, null, timelength);
+	d4p = slice(d4p, l, null, timelength);
+	d5p = slice(d5p, l, null, timelength);
 	var n;
 	n = 0
 	data = new Array();
