@@ -8,6 +8,9 @@ arduoscillo enables real time plotting of arduino analog pin signals in the brow
 Ubuntu  
 sudo apt-get python-serial
 
+Windows (avec conda)
+conda install -c anaconda pyserial
+
 ## Installing tornado webserver
 http://www.tornadoweb.org/en/stable/#installation
 
@@ -19,10 +22,14 @@ sudo easy_install tornado
 Ubuntu  
 sudo apt-get install python-tornado
 
+Windows (avec conda)
+conda install tornado
+
 ## Uploading sketch to arduino
 
 -Using arduino graphical user interface:  
  Open arduoscillo/arduino/src/sketch.ino, build and upload it  
+ 
 -Using ino command line tool:  
  Go to arduoscillo/arduino and type:  
  ino build  

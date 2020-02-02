@@ -23,17 +23,24 @@
 // to the pins used:
 const int analogInPin = 0;  // Analog input pin that the potentiometer is attached to
 const int analogOutPin = 9; // Analog output pin that the LED is attached to
-
+#define triggerPin 9
 int sensorValue = 0;        // value read from the pot
 int outputValue = 0;        // value output to the PWM (analog out)
 
 void setup() {
   // initialize serial communications at 9600 bps:
   Serial.begin(19200); 
+  pinMode(triggerPin, OUTPUT);
+  digitalWrite(triggerPin, LOW);
 }
-
+void read_sensor() {
+  digitalWrite(triggerPin, HIGH);
+  delayMicroseconds(20);
+  digitalWrite(triggerPin, LOW);
+}
 void loop() {
   // read the analog in value:
+  read_sensor();
   for (int thisPin = 0; thisPin < 6; thisPin++) {
   sensorValue = analogRead(thisPin);            
   

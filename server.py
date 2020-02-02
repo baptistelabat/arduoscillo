@@ -28,19 +28,19 @@ def openSerial():
   global ser
   
   # Loop over varying serial port till you find one (assume you have only one device connected)
-  locations = ['/dev/ttyACM0','/dev/ttyACM1','/dev/ttyACM2','/dev/ttyACM3','/dev/ttyACM4','/dev/ttyACM5','/dev/ttyUSB0','/dev/ttyUSB1','/dev/ttyUSB2','/dev/ttyUSB3','/dev/ttyS0','/dev/ttyS1','/dev/ttyS2','/dev/ttyS3']
+  locations = ['/dev/ttyACM0','/dev/ttyACM1','/dev/ttyACM2','/dev/ttyACM3','/dev/ttyACM4','/dev/ttyACM5','/dev/ttyUSB0','/dev/ttyUSB1','/dev/ttyUSB2','/dev/ttyUSB3','/dev/ttyS0','/dev/ttyS1','/dev/ttyS2','/dev/ttyS3','COM0','COM1','COM2','COM3','COM4','COM5','COM6']
   for device in locations:
     try:
-      print "Trying...",device
+      print("Trying...",device)
       ser = serial.Serial(device, baudrate=19200, timeout=1)
-      print "Connected on ", device
+      print("Connected on ", device)
       time.sleep(1.5) # Arduino is reset when opening port so wait before communicating
       # An alternative would be to listen to a message from the arduino saying it is ready
       ser.write('i1') # i to start serial control, 1 is the minimum expecting message frequency (in house protocol)
 
       break
     except:
-      print "Failed to connect on ", device
+      print("Failed to connect on ", device)
       
 
 def checkSerial():
@@ -49,16 +49,16 @@ def checkSerial():
     global t0
     t = time.time()-t0 
     try:
-        s = ser.readline()
-        print "Received from arduino: " + s
-    except Exception, e:
+        s = ser.readline().decode('utf8')
+        print("Received from arduino: " + s)
+    except Exception as e:
         print("Error reading from serial port" + str(e))
         openSerial()
         d = str(-512)   
         s = d+', ' + d + ', ' + d + ', ' +d + ', '+d+', '+d
     if len(s):
       a = s.split(',') 
-      print a     
+      print( a)     
       for c in clients:
         c.write_message( json.dumps({'x':t, 'd0':float(a[0]), 'd1':float(a[1]), 'd2':float(a[2]), 'd3':float(a[3]), 'd4':float(a[4]), 'd5':float(a[5])}))
 
@@ -69,16 +69,16 @@ class MainHandler(tornado.web.RequestHandler):
  
 class WebSocketHandler(tornado.websocket.WebSocketHandler):
     def on_message(self, message):  
-      print "message received"     
+      print("message received"  )   
 
     def open(self):
       clients.append(self)
       self.write_message(u"Connected")
-      print "open"
+      print( "open")
       
     def on_close(self):
       clients.remove(self)
-      print "close"
+      print ("close")
 
 handlers = [
     (r"/", MainHandler),
@@ -102,7 +102,7 @@ if __name__ == "__main__":
     application.listen(8080)
     mainLoop = tornado.ioloop.IOLoop.instance()
     #scheduler = tornado.ioloop.PeriodicCallback(timer, 100, io_loop = mainLoop)
-    scheduler = tornado.ioloop.PeriodicCallback(checkSerial, 1, io_loop = mainLoop)
+    scheduler = tornado.ioloop.PeriodicCallback(checkSerial, 1)
     scheduler.start()
     mainLoop.start()
     
